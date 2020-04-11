@@ -189,7 +189,7 @@ def minimax(board):
         for action in actions(board):
             tempMin = minValue(result(board, action))
             print(tempMin, " ", action)
-            if tempMin > optimalMax:
+            if tempMin >= optimalMax:
                 optimalMax = tempMin
                 optimalAction = action
         print("OptimalMove: ", optimalMax, ", ", optimalAction)
@@ -202,7 +202,7 @@ def minimax(board):
         for action in actions(board):
             tempMax = maxValue(result(board, action))
             print(tempMax, " ", action)
-            if tempMax < optimalMin:
+            if tempMax <= optimalMin:
                 optimalMin = tempMax
                 optimalAction = action
         print("OptimalMove: ", optimalMin, ", ", optimalAction)
