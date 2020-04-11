@@ -26,10 +26,10 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    print("-------------------------------")
-    for row in board:
-        print(row)
-    print("-------------------------------")
+    # print("-------------------------------")
+    # for row in board:
+    #     print(row)
+    # print("-------------------------------")
     countX = 0
     countO = 0
     for row in board:
@@ -187,9 +187,12 @@ def minimax(board):
         optimalMax = NEGATIVE_INFINITY
         optimalAction = None
         for action in actions(board):
-            if minValue(board) > optimalMax:
+            tempMin = minValue(result(board, action))
+            print(tempMin, " ", action)
+            if tempMin > optimalMax:
+                optimalMax = tempMin
                 optimalAction = action
-
+        print("OptimalMove: ", optimalMax, ", ", optimalAction)
         return optimalAction
 
     else:
@@ -197,7 +200,10 @@ def minimax(board):
         optimalMin = POSITIVE_INFINITY
         optimalAction = None
         for action in actions(board):
-            if maxValue(board) < optimalMin:
+            tempMax = maxValue(result(board, action))
+            print(tempMax, " ", action)
+            if tempMax < optimalMin:
+                optimalMin = tempMax
                 optimalAction = action
-
+        print("OptimalMove: ", optimalMin, ", ", optimalAction)
         return optimalAction
