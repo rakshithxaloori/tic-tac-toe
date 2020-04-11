@@ -9,8 +9,8 @@ X = "X"
 O = "O"
 EMPTY = None
 
-NEGATIVE_INFINITY = inf
-POSITIVE_INFINITY = -inf
+NEGATIVE_INFINITY = -inf
+POSITIVE_INFINITY = inf
 
 
 def initial_state():
@@ -26,8 +26,10 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
+    print("-------------------------------")
     for row in board:
         print(row)
+    print("-------------------------------")
     countX = 0
     countO = 0
     for row in board:
@@ -37,7 +39,7 @@ def player(board):
             if column == O:
                 countO += 1
 
-    if countX == 0 or countX < countO:
+    if countX == countO:
         return X
     else:
         return O
@@ -153,6 +155,7 @@ def utility(board):
 def maxValue(board):
     if terminal(board):
         return utility(board)
+
     v = NEGATIVE_INFINITY
     for action in actions(board):
         minValAction = minValue(result(board, action))
