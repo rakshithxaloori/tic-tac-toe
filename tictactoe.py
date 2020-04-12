@@ -26,10 +26,6 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    # print("-------------------------------")
-    # for row in board:
-    #     print(row)
-    # print("-------------------------------")
     countX = 0
     countO = 0
     for row in board:
@@ -87,7 +83,7 @@ def winner(board):
     # Check the rows
     i = 0
     while i < 3:
-        if board[i][0] == board[i][1] and board[i][1] == board[i][2] and board[i][0] != EMPTY:
+        if (board[i][0] == board[i][1]) and (board[i][1] == board[i][2]) and (board[i][0] != EMPTY):
             if board[i][0] == X:
                 return X
             else:
@@ -97,7 +93,7 @@ def winner(board):
     # Check the columns
     i = 0
     while i < 3:
-        if board[0][i] == board[1][i] and board[1][i] == board[2][i] and board[0][i] != EMPTY:
+        if (board[0][i] == board[1][i]) and (board[1][i] == board[2][i]) and (board[0][i] != EMPTY):
             if board[0][i] == X:
                 return X
             else:
@@ -106,14 +102,14 @@ def winner(board):
 
     # Check the diagonals
     # 00, 11, 22
-    if board[0][0] == board[1][1] and board[1][1] == board[2][2] and board[0][0] != EMPTY:
+    if (board[0][0] == board[1][1]) and (board[1][1] == board[2][2]) and (board[0][0] != EMPTY):
         if board[0][0] == X:
             return X
         else:
             return O
     # 02, 11, 20
-    if board[0][2] == board[1][1] and board[1][1] == board[2][0] and board[0][2] != EMPTY:
-        if board[0][0] == X:
+    if (board[0][2] == board[1][1]) and (board[1][1] == board[2][0]) and (board[0][2] != EMPTY):
+        if board[0][2] == X:
             return X
         else:
             return O
@@ -154,11 +150,13 @@ def utility(board):
 
 def maxValue(board):
     if terminal(board):
+        # print("Terminal!")
         return utility(board)
 
     v = NEGATIVE_INFINITY
     for action in actions(board):
-        minValAction = minValue(result(board, action))
+        newBoard = result(board, action)
+        minValAction = minValue(newBoard)
         if v < minValAction:
             v = minValAction
 
@@ -171,7 +169,8 @@ def minValue(board):
 
     v = POSITIVE_INFINITY
     for action in actions(board):
-        maxValAction = maxValue(result(board, action))
+        newBoard = result(board, action)
+        maxValAction = maxValue(newBoard)
         if v > maxValAction:
             v = maxValAction
 
@@ -187,11 +186,13 @@ def minimax(board):
         optimalMax = NEGATIVE_INFINITY
         optimalAction = None
         for action in actions(board):
-            tempMin = minValue(result(board, action))
+            newBoard = result(board, action)
+            tempMin = minValue(newBoard)
             print(tempMin, " ", action)
             if tempMin >= optimalMax:
                 optimalMax = tempMin
                 optimalAction = action
+
         print("OptimalMove: ", optimalMax, ", ", optimalAction)
         return optimalAction
 
@@ -200,10 +201,12 @@ def minimax(board):
         optimalMin = POSITIVE_INFINITY
         optimalAction = None
         for action in actions(board):
-            tempMax = maxValue(result(board, action))
+            newBoard = result(board, action)
+            tempMax = maxValue(newBoard)
             print(tempMax, " ", action)
             if tempMax <= optimalMin:
                 optimalMin = tempMax
                 optimalAction = action
+
         print("OptimalMove: ", optimalMin, ", ", optimalAction)
         return optimalAction
